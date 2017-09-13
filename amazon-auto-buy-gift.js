@@ -23,14 +23,18 @@
     // お支払方法選択画面
     } else if (href.includes("https://www.amazon.co.jp/gp/buy/payselect/handlers/display.html?hasWorkingJavascript=1")) {
         const checkbox = /** @type {HTMLElement} */ (document.querySelector("#convenienceStorePayment"));
-        const button = /** @type {HTMLElement} */ (document.querySelector("#continue-top"));
+        const continueButton = /** @type {HTMLElement} */ (document.querySelector("#continue-top"));
         checkbox.click();
         await wait(0.5);
-        button.click();
-    // 確認画面
-    } else if (href.includes("https://www.amazon.co.jp/gp/buy/spc/handlers/display.html?hasWorkingJavascript=1")) {
-        const button = /** @type {HTMLElement} */ (document.querySelector("#order-summary-box > div.a-box.a-first > div > div.a-row.a-spacing-base > div > span > span > input"));
-        button.click();
+        continueButton.click();
+        // 確認画面
+        await wait(2);
+        const orderButton = /** @type {HTMLElement} */ (document.querySelector("[name=placeYourOrder1]"));
+        if (orderButton === null) {
+            alert("tampermonkeyエラー: 2秒待ったけどロード中")
+            return;
+        }
+        orderButton.click();
     // 注文終了画面
     } else if (href.includes("https://www.amazon.co.jp/gp/buy/thankyou/handlers/display.html")) {
         window.location.href = "https://www.amazon.co.jp/gp/gc/create/ref=gc_cac_red";
