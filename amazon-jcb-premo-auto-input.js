@@ -14,7 +14,7 @@
     const href = location.href;
     // 引数の秒数分待つ
     const wait = ( /** @type {number} */ second) => new Promise((resolve) => setTimeout(() => resolve(), second * 1000))
-    await wait(1)
+    await wait(0.5)
     // お支払方法の選択画面
     if (href.includes("https://link3.kessai.info/JLP/JLPcon")) {
         if (location.hash.length === 0) {
@@ -46,7 +46,7 @@
         const form = /** @type {HTMLFormElement} */ (document.querySelector("form[name=premo]"));
         cardNoInput.value = card.no;
         cardAuthInput.value = card.key;
-        await wait(1);
+        await wait(4); // 4秒と長めだが、クレジット系の処理がかなり遅いため。2秒とかにすると、サーバーの処理が終わる前に送信してしまう場合が多く、前の支払い情報で決済しようとして「この取引はすでに～」というエラー画面が出る頻度が多い
         form.submit();
     // エラー画面
     } else if (href.includes("errorcode=")) {
